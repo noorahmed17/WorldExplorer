@@ -102,7 +102,7 @@ span {
 @media (max-width: 600px) {
   .container {
     width: 30%;
-    margin: -2px;
+    margin: -5px;
   }
   .country-info {
     font-size: 10px;
