@@ -98,3 +98,21 @@ span {
   align-items: center;
   height: 200px;
 }
+
+@media (max-width: 600px) {
+  .container {
+    width: 30%;
+    margin: -2px;
+  }
+  .country-info {
+    font-size: 10px;
+    padding: 8px;
+  }
+  span {
+    font-size: 10px;
+    margin-left: 5px;
+  }
+  .flag {
+    height: 90px;
+  }
+}
