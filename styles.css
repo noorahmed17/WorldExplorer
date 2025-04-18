@@ -106,13 +106,13 @@ span {
   }
   .country-info {
     font-size: 8px;
-    padding: 8px;
+    padding: 6px;
   }
   span {
     font-size: 7px;
     margin-left: 5px;
   }
   .flag {
-    height: 90px;
+    height: 87px;
   }
 }
