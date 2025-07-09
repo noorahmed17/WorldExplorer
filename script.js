@@ -1,7 +1,7 @@
 const searchBtn = document.querySelector(".search-btn");
 const searchInput = document.querySelector(".search-input");
 const cardsContainer = document.querySelector(".cards-container");
-const proxy = "https://cors-anywhere.herokuapp.com/";
+// const proxy = "https://cors-anywhere.herokuapp.com/";
 
 //Get all Countries
 const getCountryData = async function () {
@@ -16,18 +16,6 @@ const getCountryData = async function () {
   localStorage.setItem("countries", JSON.stringify(data));
   return data;
 };
-
-// //Get A Country
-// const getCountry = async function (name) {
-//   const countries = getCountryData()
-//   let country = localStorage.getItem("countries").
-//   // const url = `https://www.apicountries.com/name/${name}`;
-//   // const res = await fetch(proxy + url, {
-//   //   method: "GET",
-//   // });
-//   // const data = await res.json();
-//   // return data;
-// };
 
 //Rendering Cards of Countries
 const renderCountryCards = function (country) {
@@ -87,8 +75,6 @@ searchInput.addEventListener("input", async (e) => {
       .filter((country) => {
         if (country.name.toLowerCase().includes(query))
           return country.name.toLowerCase().includes(query);
-        // if (country.translations.ara.includes(query))
-        //   return country.translations.ara.includes(query);
       })
       .forEach((country) => {
         let html = renderCountryCards(country);
