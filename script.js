@@ -8,8 +8,8 @@ const getCountryData = async function () {
   const cached = localStorage.getItem("countries");
   if (cached) return JSON.parse(cached);
 
-  const url = "https://www.apicountries.com/countries";
-  const res = await fetch(proxy + url, {
+  // const url = "https://www.apicountries.com/countries";
+  const res = await fetch(/api/countries, {
     method: "GET",
   });
   const data = await res.json();
