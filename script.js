@@ -1,26 +1,33 @@
 const searchBtn = document.querySelector(".search-btn");
 const searchInput = document.querySelector(".search-input");
 const cardsContainer = document.querySelector(".cards-container");
+const proxy = "https://cors-anywhere.herokuapp.com/";
 
 //Get all Countries
 const getCountryData = async function () {
-  const url = "https://restcountries.com/v3.1/all";
-  const res = await fetch(url, {
+  const cached = localStorage.getItem("countries");
+  if (cached) return JSON.parse(cached);
+
+  const url = "https://www.apicountries.com/countries";
+  const res = await fetch(proxy + url, {
     method: "GET",
   });
   const data = await res.json();
+  localStorage.setItem("countries", JSON.stringify(data));
   return data;
 };
 
-//Get A Country
-const getCountry = async function (name) {
-  const url = `https://restcountries.com/v3.1/name/${name}`;
-  const res = await fetch(url, {
-    method: "GET",
-  });
-  const data = await res.json();
-  return data;
-};
+// //Get A Country
+// const getCountry = async function (name) {
+//   const countries = getCountryData()
+//   let country = localStorage.getItem("countries").
+//   // const url = `https://www.apicountries.com/name/${name}`;
+//   // const res = await fetch(proxy + url, {
+//   //   method: "GET",
+//   // });
+//   // const data = await res.json();
+//   // return data;
+// };
 
 //Rendering Cards of Countries
 const renderCountryCards = function (country) {
@@ -31,22 +38,16 @@ const renderCountryCards = function (country) {
     country.flags.alt
   }" class="flag" />
         <div class="country-info">
-          <h2 class="country-name">${country.name.common} ${
-    country.translations.ara.common
-  }</h2>
-          <h3 class="region">${country.continents[0]}</h3>
+          <h2 class="country-name">${country.name}</h2>
+          <h3 class="region">${country.region}</h3>
           <p class="capital">📍 <span>${
-            country.capital ? country.capital[0] : "No capital"
+            country.capital ? country.capital : "No capital"
           }</span></p>
           <p class="lang-used">🗣 <span>${
-            country.languages
-              ? Object.values(country.languages)[0] || "No Language"
-              : "No Language"
+            country.languages ? country.languages[0].name : "No Language"
           }</span></p>
           <p class="currency">💰 <span>${
-            country.currencies
-              ? Object.keys(country.currencies).join(", ")
-              : "No currency"
+            country.currencies ? country.currencies[0].code : "No currency"
           }</span></p>
         </div>
       </article>
@@ -61,12 +62,12 @@ const countryCards = async function () {
   cardsContainer.innerHTML = "";
 
   countryData.sort((a, b) => {
-    if (a.name.common < b.name.common) return -1;
-    if (a.name.common > b.name.common) return 1;
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
   });
 
   countryData = countryData.filter((country) => {
-    if (country.name.common.toLowerCase() !== "israel") return country;
+    if (country.name.toLowerCase() !== "israel") return country;
   });
 
   countryData.forEach((country) => {
@@ -75,7 +76,7 @@ const countryCards = async function () {
   });
 };
 
-//Search on English and Arabic 
+//Search on English and Arabic
 searchInput.addEventListener("input", async (e) => {
   let query = e.target.value.toLowerCase();
   let countryData = await getCountryData();
@@ -84,10 +85,10 @@ searchInput.addEventListener("input", async (e) => {
   if (query) {
     countryData
       .filter((country) => {
-        if (country.name.common.toLowerCase().includes(query))
-          return country.name.common.toLowerCase().includes(query);
-        if (country.translations.ara.common.includes(query))
-          return country.translations.ara.common.includes(query);
+        if (country.name.toLowerCase().includes(query))
+          return country.name.toLowerCase().includes(query);
+        // if (country.translations.ara.includes(query))
+        //   return country.translations.ara.includes(query);
       })
       .forEach((country) => {
         let html = renderCountryCards(country);
