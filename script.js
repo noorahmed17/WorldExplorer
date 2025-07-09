@@ -9,7 +9,7 @@ const getCountryData = async function () {
   if (cached) return JSON.parse(cached);
 
   // const url = "https://www.apicountries.com/countries";
-  const res = await fetch(/api/countries, {
+  const res = await fetch("/api/countries", {
     method: "GET",
   });
   const data = await res.json();
